@@ -1,17 +1,16 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Deployment package on NPM public repository "initial quality setup"
+name: Deployment package on NPM public repository "Quality Check"
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: ["main", "master"]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: ["main", "master"]
 
 jobs:
   quality:
-
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -19,22 +18,22 @@ jobs:
         node-version: [14.x, 16.x, 18.x]
         os: ["ubuntu-latest", "macOS-latest"]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
-        
-    - name: Install deps and build (with cache)
-      run: yarn install
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Lint
-      run: yarn lint
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
 
-    - name: Test
-      run: yarn test --ci --coverage --maxWorkers=1
+      - name: Install deps and build (with cache)
+        run: yarn install
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test --ci --coverage --maxWorkers=1
