@@ -28,13 +28,13 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        cache: 'yarn'
         
     - name: Install deps and build (with cache)
-      uses: bahmutov/npm-install@v1
+      run: yarn install
 
     - name: Lint
       run: yarn lint
 
     - name: Test
-      run: yarn test --ci --coverage --maxWorkers=2
+      run: yarn test --ci --coverage --maxWorkers=1
