@@ -1,0 +1,50 @@
+name: Deployment package on NPM public repository
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  quality:
+    name: Build, Lint, Version, and Test on Node ${{ matrix.node }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: ["14.x", "16.x", " 18.x"]
+        os: [ubuntu-latest, macOS-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+          registry-url: https://registry.npmjs.org
+
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1.x
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test --ci --coverage --maxWorkers=2
+
+      # - name: Version
+      #   run: yarn run -v --patch
+
+      # - name: Build
+      #   run: yarn build
+
+      # - name: Git configuration
+      #   run: |
+      #     git config --global user.email "asmdhabibullah+github-actions[bot]@users.noreply.github.com"
+      #     git config --global user.name "As Md Habibullah Actions"
+
+      # - name: Publish
+      #   run: yarn run publish --access public
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
