@@ -1,6 +1,6 @@
 {
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.0.0-development",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -11,15 +11,16 @@
     "node": ">=10"
   },
   "scripts": {
+    "commit": "cz",
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "semantic-release": "semantic-release --branches main"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -33,7 +34,10 @@
   },
   "name": "technopackage",
   "author": "asmdhabibullah <asmdhabibullah@yahoo.com>",
-  "repository": "https://github.com/asmdhabibullah/technopackage.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asmdhabibullah/technopackage.git"
+  },
   "module": "dist/.esm.js",
   "size-limit": [
     {
@@ -49,10 +53,17 @@
     "@size-limit/preset-small-lib": "^8.1.2",
     "@types/jest": "^29.4.0",
     "@types/node": "^18.11.18",
+    "cz-conventional-changelog": "^3.3.0",
     "husky": "^8.0.3",
+    "semantic-release": "^20.1.0",
     "size-limit": "^8.1.2",
     "tsdx": "^0.14.1",
     "tslib": "^2.5.0",
     "typescript": "^4.9.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
