@@ -58,8 +58,8 @@ jobs:
       - name: Install deps and build
         run: yarn install
 
-      - name: Semantic Release
+      - name: Release
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn semantic-release
