@@ -38,7 +38,7 @@ jobs:
         run: yarn test --ci --coverage
 
   publish:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: github.ref_name == 'main'
     runs-on: ${{ matrix.os }}
     needs: [quality]
 
@@ -46,9 +46,13 @@ jobs:
       matrix:
         node-version: [18.x]
         os: ["ubuntu-latest"]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Use NodeJs ${{ matrix.node-version }}
         uses: actions/setup-node@v3
